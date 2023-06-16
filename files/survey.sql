@@ -13,17 +13,22 @@ CREATE TABLE public.users (
 	lat float8 NULL,
 	lon float8 NULL,
 	company varchar(155) NULL,
-	"isLogin" bool NULL,
-	"createdAt" timestamptz NOT NULL DEFAULT now(),
-	"updatedAt" timestamptz NOT NULL DEFAULT now(),
 	dovote bool NULL DEFAULT false,
 	dosurvey bool NULL DEFAULT false,
 	dofeedback bool NULL DEFAULT false,
 	fullname varchar(255) NULL,
 	"cuurentLeave" int4 NULL,
-	CONSTRAINT users_digits_key UNIQUE (digits),
-	CONSTRAINT users_pkey PRIMARY KEY (id)
+	"roleId" INTEGER,
+	"isLogin" bool NULL,
+	"createdAt" timestamptz NOT NULL DEFAULT now(),
+	"updatedAt" timestamptz NOT NULL DEFAULT now(),
+    CONSTRAINT users_digits_key UNIQUE (digits),
+	CONSTRAINT users_pkey PRIMARY KEY (id),
+    CONSTRAINT users_roleId_fkey FOREIGN KEY ("roleId")
+    REFERENCES roles (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+selece * from users;
 
 INSERT INTO public.users ("id",digits,"fotoUrl","workType","positionTitle",lat,lon,company,"isLogin","createdAt","updatedAt",dovote,dosurvey,dofeedback,fullname,"cuurentLeave") VALUES
 	 (1,'DFA','','WFO',NULL,0.0,0.0,'NTX',true,'2021-12-15 15:06:33+07','2022-12-22 21:05:32.377+07',true,true,false,'M. Daffa Quraisy',0),
@@ -54,3 +59,14 @@ INSERT INTO public.surveys ("values","createdAt","updatedAt","userId") VALUES
 	 ('{100,100,90,90,100}','2022-12-22 08:56:50.696+07','2022-12-22 08:56:50.696+07',1),
 	 ('{90,100,100,80,90}','2022-12-22 09:08:50.908+07','2022-12-22 09:08:50.908+07',2),
 	 ('{80,80,80,80,80}','2022-12-22 21:05:32.317+07','2022-12-22 21:05:32.317+07',3);
+
+select * from surveys;
+
+CREATE TABLE public.roles (
+	id serial4 PRIMARY KEY,
+	name VARCHAR(100) NOT NULL
+);
+
+INSERT INTO public.roles (id, name) VALUES
+	(1, 'Admin'),
+	(2, 'User');

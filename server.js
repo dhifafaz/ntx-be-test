@@ -6,7 +6,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:8080"],
+	origin: ["http://localhost:8080"],
 };
 
 app.use(cors(corsOptions));
@@ -31,14 +31,14 @@ db.sequelize.sync();
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Hello" });
+	res.json({ message: "Hello" });
 });
 
 // routes
-// require("./app/routes/exaole.routes")(app);
+require("./app/routes/routes")(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 7878;
+const PORT = process.env.SERVER_PORT || 7878;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+	console.log(`Server is running on port ${PORT}.`);
 });
