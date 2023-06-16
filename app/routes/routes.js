@@ -19,7 +19,11 @@ module.exports = (app) => {
 		mainController.getUsers
 	);
 
-  
+	router.post(
+		"/add-user",
+		// [exampleMiddleware.exampleMiddleware],
+		mainController.addUser
+	);
 
 	app.use("/api/data", router);
 };
